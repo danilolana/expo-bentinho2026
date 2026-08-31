@@ -1,2 +1,14 @@
-# expo-bentinho2026
-Site da expo bentinho 2026
+# Expo Bentinho 2026
+
+Landing page oficial da Expo Bentinho 2026.
+
+## Desenvolvimento
+
+```bash
+npm install
+npm run dev
+```
+
+## Publicação
+
+O projeto é preparado para publicação na Vercel.
