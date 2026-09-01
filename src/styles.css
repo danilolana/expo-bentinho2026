@@ -278,7 +278,7 @@ a:focus-visible {
 }
 
 .mascot-frame {
-  background: var(--white);
+  background: transparent;
   box-shadow: 22px 22px 0 var(--bq-blue);
   clip-path: polygon(0 0, calc(100% - 64px) 0, 100% 64px, 100% 100%, 64px 100%, 0 calc(100% - 64px));
   height: min(68vh, 670px);
@@ -292,7 +292,7 @@ a:focus-visible {
 
 .mascot-frame img {
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
 }
 
@@ -791,6 +791,43 @@ a:focus-visible {
 .result-page {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.confetti {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 4;
+}
+
+.confetti-piece {
+  animation: confetti-fall var(--confetti-duration) cubic-bezier(.16, .72, .29, 1) var(--confetti-delay) both;
+  background: var(--confetti-color);
+  height: 11px;
+  left: var(--confetti-left);
+  position: absolute;
+  top: -18px;
+  width: 7px;
+}
+
+.confetti-piece--1 {
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
+.confetti-piece--2 {
+  height: 5px;
+  transform: rotate(45deg);
+  width: 12px;
+}
+
+@keyframes confetti-fall {
+  0% { opacity: 0; transform: translate3d(0, -20px, 0) rotate(var(--confetti-rotation)); }
+  8% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(70px, 110vh, 0) rotate(calc(var(--confetti-rotation) + 700deg)); }
 }
 
 .result-card {

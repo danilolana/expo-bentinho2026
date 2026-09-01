@@ -67,4 +67,4 @@ As cores e durações ficam em `src/styles.css`; altere primeiro os tokens em `:
 
 - O histórico é local ao navegador e ao dispositivo; limpar os dados do site reinicia o ciclo.
 - Não há autenticação, placar remoto ou backend, pois não foram definidos no escopo.
-- O mascote fornecido é JPEG com fundo branco; o enquadramento é feito por CSS para preservar o arquivo original.
+- O mascote fornecido é PNG; o enquadramento é feito por CSS para preservar o arquivo original.

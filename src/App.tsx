@@ -12,6 +12,14 @@ type Screen = 'loading' | 'intro' | 'quiz' | 'result'
 
 const optionLetters = ['A', 'B', 'C', 'D'] as const
 
+const confettiPieces = Array.from({ length: 52 }, (_, index) => ({
+  left: `${(index * 37 + 11) % 100}%`,
+  delay: `${(index % 9) * 55}ms`,
+  duration: `${2100 + (index % 6) * 130}ms`,
+  rotation: `${(index * 53) % 360}deg`,
+  color: ['#9bd33d', '#0e5b99', '#f6c744', '#ef6b55', '#ffffff'][index % 5],
+}))
+
 function BrandHeader() {
   return (
     <header className="brand-header">
@@ -62,7 +70,7 @@ function Intro({ onStart, error }: { onStart: () => void; error: string }) {
           {error && <p className="error-message" role="alert">{error}</p>}
           <dl className="hero-facts" aria-label="Regras do desafio">
             <div><dt>05</dt><dd>perguntas por rodada</dd></div>
-            <div><dt>70</dt><dd>perguntas no banco</dd></div>
+            <div><dt>NÓS</dt><dd>estudantes de informática</dd></div>
             <div><dt>01+</dt><dd>de informática</dd></div>
           </dl>
         </div>
@@ -70,7 +78,7 @@ function Intro({ onStart, error }: { onStart: () => void; error: string }) {
         <div className="hero-visual" aria-label="Mascote BQ Informática 2026">
           <div className="hero-index" aria-hidden="true">BQ/26</div>
           <div className="mascot-frame">
-            <img src="/assets/mascote-bq.jpeg" alt="Mascote BQ estudando programação em um notebook" />
+            <img src="/assets/mascote.ia.png" alt="Mascote BQ estudando programação em um notebook" />
           </div>
           <div className="hero-stamp" aria-hidden="true">
             <span>Conhecimento</span><strong>em movimento</strong>
@@ -119,7 +127,7 @@ function Quiz({ round, questionIndex, selectedAnswer, score, onAnswer }: QuizPro
 
       <section className={`quiz-layout ${hasAnswered ? (isCorrect ? 'answer-correct' : 'answer-wrong') : ''}`}>
         <aside className="hint-panel">
-          <div className="hint-image"><img src="/assets/mascote-bq.jpeg" alt="Mascote BQ" /></div>
+          <div className="hint-image"><img src="/assets/mascote.ia.png" alt="Mascote BQ" /></div>
           <div className="hint-copy">
             <span className="hint-label">Pista do Bentinho</span>
             <p>{question.hint}</p>
@@ -179,13 +187,28 @@ function Result({ score, onRestart }: { score: number; onRestart: () => void }) 
 
   return (
     <main className="page-shell result-page">
+      <div className="confetti" aria-hidden="true">
+        {confettiPieces.map((piece, index) => (
+          <i
+            className={`confetti-piece confetti-piece--${index % 3}`}
+            key={index}
+            style={{
+              '--confetti-left': piece.left,
+              '--confetti-delay': piece.delay,
+              '--confetti-duration': piece.duration,
+              '--confetti-rotation': piece.rotation,
+              '--confetti-color': piece.color,
+            } as CSSProperties}
+          />
+        ))}
+      </div>
       <BrandHeader />
       <section className="result-card">
         <div className="result-copy">
           <p className="eyebrow"><span /> Rodada concluída</p>
           <h1>{title}</h1>
           <p>
-            Você acertou <strong>{score} de {ROUND_SIZE}</strong>. Cada nova rodada traz perguntas ainda não vistas neste ciclo.
+            Seu conhecimento entrou em campo e deixou sua marca: <strong>{score} de {ROUND_SIZE}</strong>!
           </p>
           <button className="primary-button" type="button" onClick={onRestart}>
             Jogar outra rodada <span aria-hidden="true">↻</span>
@@ -194,7 +217,6 @@ function Result({ score, onRestart }: { score: number; onRestart: () => void }) 
         <div className="score-dial" style={{ '--score': `${percentage * 3.6}deg` } as CSSProperties}>
           <div><strong>{percentage}<small>%</small></strong><span>aproveitamento</span></div>
         </div>
-        <img className="result-signature" src="/assets/assinatura-bento-quirino.png" alt="Bento Quirino" />
       </section>
     </main>
   )

@@ -52,5 +52,6 @@ describe('fluxo do quiz', () => {
 
     expect(screen.getByRole('button', { name: /jogar outra rodada/i })).toBeInTheDocument()
     expect(screen.getByText('Rodada concluída')).toBeInTheDocument()
+    expect(document.querySelectorAll('.confetti-piece')).toHaveLength(52)
   })
 })
