@@ -10,6 +10,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "^1.0.1",
     "react": "latest",
     "react-dom": "latest"
   },
