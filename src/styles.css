@@ -25,12 +25,26 @@ html {
   min-width: 320px;
   min-height: 100%;
   background: var(--deep-blue);
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
 }
 
 button,
@@ -40,6 +54,8 @@ a {
 
 button {
   font: inherit;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 button:focus-visible,
@@ -50,8 +66,13 @@ a:focus-visible {
 
 .page-shell {
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 24px clamp(22px, 5vw, 76px) 36px;
-  overflow: hidden;
+  padding-bottom: max(36px, env(safe-area-inset-bottom));
+  padding-left: max(clamp(22px, 5vw, 76px), env(safe-area-inset-left));
+  padding-right: max(clamp(22px, 5vw, 76px), env(safe-area-inset-right));
+  padding-top: max(24px, env(safe-area-inset-top));
+  overflow-x: clip;
   position: relative;
 }
 
@@ -296,6 +317,12 @@ a:focus-visible {
   width: 100%;
 }
 
+.mascot-frame picture,
+.hint-image picture {
+  height: 100%;
+  width: 100%;
+}
+
 .hero-index {
   color: var(--bq-blue);
   font-family: "Cascadia Mono", Consolas, monospace;
@@ -369,6 +396,8 @@ a:focus-visible {
   inset: 0;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
 }
 
 .loader-orbit {
@@ -791,7 +820,7 @@ a:focus-visible {
 .result-page {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .confetti {
@@ -932,7 +961,9 @@ a:focus-visible {
 }
 
 @media (max-width: 760px) {
-  .page-shell { padding: 16px 18px 26px; }
+  .page-shell {
+    padding: max(16px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  }
   .brand-header { min-height: 56px; }
   .brand-lockup img { height: 50px; width: 50px; }
   .brand-copy strong { font-size: 14px; }
@@ -945,6 +976,7 @@ a:focus-visible {
     flex-direction: column;
     gap: 30px;
     margin-top: 35px;
+    min-height: 0;
   }
 
   .hero-copy { padding-bottom: 0; }
@@ -990,11 +1022,11 @@ a:focus-visible {
     clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
     display: grid;
     grid-template-columns: 80px 1fr;
-    grid-template-rows: 92px;
-    min-height: 0;
+    grid-template-rows: minmax(112px, auto);
+    min-height: 112px;
     order: 0;
   }
-  .hint-image { height: 92px; }
+  .hint-image { height: 100%; min-height: 112px; }
   .hint-image img { object-position: 50% 14%; transform: scale(1.5); }
   .hint-copy { padding: 12px 16px; }
   .hint-label { font-size: 8px; }
@@ -1026,7 +1058,7 @@ a:focus-visible {
     gap: 34px;
     margin: 35px 0 0;
     max-height: none;
-    min-height: 650px;
+    min-height: min(650px, calc(100dvh - 105px));
     padding: 42px 25px;
     text-align: center;
   }
@@ -1038,7 +1070,10 @@ a:focus-visible {
 }
 
 @media (max-width: 410px) {
-  .page-shell { padding-inline: 13px; }
+  .page-shell {
+    padding-left: max(13px, env(safe-area-inset-left));
+    padding-right: max(13px, env(safe-area-inset-right));
+  }
   .brand-copy small { display: none; }
   .hero h1 { font-size: 77px; }
   .hero-facts dd { font-size: 8px; }
@@ -1046,6 +1081,7 @@ a:focus-visible {
   .mascot-frame { height: 370px; }
   .question-card h2 { font-size: 24px; }
   .option-button { font-size: 12px; }
+  .primary-button { min-width: 0; width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1547,6 +1583,11 @@ a:focus-visible {
   width: 100%;
 }
 
+.canvas-frame canvas:focus-visible {
+  box-shadow: inset 0 0 0 4px var(--signal-green);
+  outline: 0;
+}
+
 .control-callout {
   background: rgba(6, 29, 51, .84);
   bottom: 15px;
@@ -1562,6 +1603,10 @@ a:focus-visible {
   text-transform: uppercase;
   transform: translateX(-50%);
   white-space: nowrap;
+}
+
+.orientation-note {
+  display: none;
 }
 
 .live-camera-chip {
@@ -1777,7 +1822,11 @@ a:focus-visible {
 
   .game-intro-card { align-items: stretch; }
   .game-intro-copy h1 { font-size: clamp(56px, 18vw, 78px); }
-  .game-intro-visual { align-self: center; max-width: 430px; }
+  .game-intro-visual {
+    align-self: center;
+    box-shadow: 10px 10px 0 var(--bq-blue);
+    max-width: 430px;
+  }
   .mode-actions { align-items: stretch; flex-direction: column; }
   .mode-actions .primary-button { width: 100%; }
   .mode-actions .secondary-button { width: 100%; }
@@ -1788,7 +1837,10 @@ a:focus-visible {
   .calibration-preview { align-self: center; max-width: 480px; width: 100%; }
   .setup-copy h1 { font-size: clamp(43px, 13vw, 63px); }
 
-  .minigame-page { padding-inline: 10px; }
+  .minigame-page {
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
   .game-stage-wrap { justify-content: flex-start; margin-top: 14px; }
   .game-hud { gap: 8px; grid-template-columns: auto 1fr auto; }
   .mode-indicator { justify-self: center; padding: 7px 8px; }
@@ -1797,10 +1849,17 @@ a:focus-visible {
   .hint-counter strong { font-size: 22px; }
   .canvas-frame { box-shadow: 7px 7px 0 #07518b; }
   .canvas-frame canvas { max-height: none; }
-  .control-callout { bottom: 8px; font-size: 7px; max-width: 86%; overflow: hidden; text-overflow: ellipsis; }
+  .control-callout { bottom: 8px; font-size: 8px; max-width: 86%; overflow: hidden; text-overflow: ellipsis; }
   .live-camera-chip { bottom: 8px; height: 48px; right: 8px; width: 64px; }
 
-  .minigame-result-card { align-items: stretch; gap: 32px; padding: 38px 24px; text-align: center; }
+  .minigame-result-card {
+    align-items: stretch;
+    box-shadow: 8px 8px 0 var(--bq-blue);
+    gap: 32px;
+    padding: 38px 24px;
+    text-align: center;
+    width: calc(100% - 8px);
+  }
   .minigame-result-card .eyebrow { justify-content: center; }
   .minigame-result-content h1 { font-size: clamp(42px, 13vw, 58px); margin-inline: auto; }
   .minigame-result-content > p:not(.eyebrow) { font-size: 15px; margin: 18px auto 26px; }
@@ -1820,13 +1879,84 @@ a:focus-visible {
   .quiz-page .hint-counter strong { font-size: 22px; }
 
   .hint-panel { grid-template-columns: 72px 1fr; min-height: 112px; }
-  .hint-image { height: 112px; }
+  .hint-image { height: 100%; min-height: 112px; }
   .hint-copy { padding: 12px 14px; }
-  .hint-button { margin-top: 8px; min-height: 35px; padding: 7px 10px; }
+  .hint-button { margin-top: 8px; min-height: 44px; padding: 9px 10px; }
 }
 
 @media (max-width: 420px) {
-  .mode-indicator { border: 0; font-size: 0; padding: 4px; }
+  .mode-indicator {
+    border: 0;
+    font-size: 8px;
+    justify-content: center;
+    line-height: 1.2;
+    max-width: 76px;
+    padding: 4px;
+    text-align: center;
+  }
   .mode-indicator i { height: 9px; width: 9px; }
   .game-hud { margin-inline: 4px; }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .orientation-note {
+    background: #0b385d;
+    color: #c7d7e0;
+    display: block;
+    font-family: "Cascadia Mono", Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: .04em;
+    margin: 0;
+    padding: 9px 12px;
+    text-align: center;
+  }
+}
+
+@media (max-height: 600px) and (min-width: 761px) and (max-width: 950px) {
+  .page-shell {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+
+  .brand-header { min-height: 52px; }
+  .brand-lockup img { height: 46px; width: 46px; }
+  .hero { gap: 32px; margin-top: 18px; min-height: 0; }
+  .hero h1 { font-size: clamp(62px, 10vw, 86px); }
+  .hero-lead { font-size: 15px; margin: 17px 0; }
+  .hero-facts { margin-top: 22px; }
+  .hero-visual { min-height: 310px; }
+  .mascot-frame { height: 290px; min-height: 0; }
+  .hero-stamp { bottom: 8px; }
+  .intro-footer { margin-top: 12px; }
+
+  .game-intro-card,
+  .setup-card,
+  .calibration-card,
+  .minigame-result-card {
+    margin-top: 18px;
+    min-height: 0;
+  }
+
+  .game-intro-copy h1 { font-size: clamp(52px, 9vw, 72px); }
+  .game-intro-copy > p:not(.eyebrow),
+  .setup-copy > p:not(.eyebrow) { font-size: 14px; line-height: 1.45; }
+  .game-intro-visual { max-height: calc(100dvh - 105px); }
+  .setup-copy h1 { font-size: clamp(40px, 7vw, 58px); }
+  .setup-status,
+  .camera-error { margin-block: 14px 10px; }
+  .privacy-note { padding: 10px 12px; }
+}
+
+@media (hover: none) {
+  .primary-button:hover,
+  .secondary-button:hover,
+  .hint-button:hover:not(:disabled),
+  .option-button:not(:disabled):hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .primary-button:hover { background: var(--bq-blue); }
+  .secondary-button:hover { background: transparent; color: var(--bq-blue); }
+  .hint-button:hover:not(:disabled) { background: transparent; color: var(--signal-green); }
 }

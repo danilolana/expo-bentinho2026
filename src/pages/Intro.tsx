@@ -24,7 +24,17 @@ export function Intro({ onStart, error }: { onStart: () => void; error: string }
         <div className="hero-visual" aria-label="Mascote BQ Informática 2026">
           <div className="hero-index" aria-hidden="true">BQ/26</div>
           <div className="mascot-frame">
-            <img src="/assets/mascote.ia.png" alt="Mascote BQ estudando programação em um notebook" />
+            <picture>
+              <source srcSet="/assets/mascote.ia.webp" type="image/webp" />
+              <img
+                src="/assets/mascote.ia.png"
+                alt="Mascote BQ estudando programação em um notebook"
+                width="1254"
+                height="1254"
+                decoding="async"
+                fetchPriority="high"
+              />
+            </picture>
           </div>
           <div className="hero-stamp" aria-hidden="true">
             <span>Conhecimento</span><strong>em movimento</strong>
@@ -32,10 +42,15 @@ export function Intro({ onStart, error }: { onStart: () => void; error: string }
         </div>
       </section>
       <footer className="intro-footer">
-        <img src="/assets/logo-bento-quirino.png" alt="Colégio Técnico Bento Quirino — formando gerações desde 1910" />
+        <img
+          src="/assets/logo-bento-quirino.png"
+          alt="Colégio Técnico Bento Quirino — formando gerações desde 1910"
+          width="887"
+          height="317"
+          decoding="async"
+        />
         <span>Campinas · SP</span>
       </footer>
     </main>
   )
 }
-

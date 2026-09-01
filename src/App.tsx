@@ -39,6 +39,12 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    // Cada etapa funciona como uma nova tela; evita abrir a próxima no scroll anterior em celulares.
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [screen])
+
   useEffect(() => () => {
     window.clearTimeout(transitionTimer.current)
     trackerRef.current?.stop()

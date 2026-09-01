@@ -52,7 +52,18 @@ export function Quiz({
 
       <section className={`quiz-layout ${hasAnswered ? (isCorrect ? 'answer-correct' : 'answer-wrong') : ''}`}>
         <aside className={`hint-panel ${hintRevealed ? 'hint-panel--revealed' : 'hint-panel--locked'}`}>
-          <div className="hint-image"><img src="/assets/mascote.ia.png" alt="Mascote BQ" /></div>
+          <div className="hint-image">
+            <picture>
+              <source srcSet="/assets/mascote.ia.webp" type="image/webp" />
+              <img
+                src="/assets/mascote.ia.png"
+                alt="Mascote BQ"
+                width="1254"
+                height="1254"
+                decoding="async"
+              />
+            </picture>
+          </div>
           <div className="hint-copy">
             <span className="hint-label">Pista do Bentinho</span>
             {hintRevealed ? (
@@ -114,4 +125,3 @@ export function Quiz({
     </main>
   )
 }
-

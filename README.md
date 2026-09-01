@@ -61,6 +61,32 @@ Ao alterar a quantidade total ou a proporção, atualize também `validateQuesti
 
 O feedback de resposta dura 650 ms e usa apenas transformações, cor e opacidade. `prefers-reduced-motion` reduz todas as animações. Alternativas usam botões nativos, foco visível e mensagens de resultado com `aria-live`/`role="status"`. O layout da dica passa de coluna lateral para faixa superior em telas menores que 760 px.
 
+O minigame aceita toque, clique e teclado. O `canvas` recebe foco visível no modo clássico, os controles mantêm alvo mínimo de 44 px e uma orientação curta aparece em celulares no modo retrato. As páginas também respeitam safe areas e usam `100dvh` com fallback para `100vh`, evitando cortes causados pelas barras móveis do navegador.
+
+## Responsividade
+
+### Premissas e decisões
+
+- SPA executada em navegadores modernos, sem framework CSS e sem backend.
+- Layout fluido com Grid/Flexbox; o breakpoint principal de 760 px transforma colunas em fluxo vertical.
+- Breakpoints complementares em 410/420 px tratam celulares compactos; 900/1050 px ajustam tablets; uma media query por altura trata celulares em paisagem.
+- Conteúdo continua rolável verticalmente. Somente o excesso horizontal decorativo é recortado.
+- O mascote é servido em WebP (cerca de 193 KiB) com fallback PNG (cerca de 1,9 MiB), reduzindo o download nos navegadores compatíveis sem perder compatibilidade.
+- A troca de etapa reposiciona o documento no topo para não herdar o scroll da tela anterior.
+
+### Validação manual recomendada
+
+Use o modo responsivo do navegador e percorra o fluxo completo em, no mínimo:
+
+1. `360 × 800` — celular em retrato: textos sem corte, botões com 44 px, quiz em uma coluna e aviso de orientação no minigame.
+2. `844 × 390` — celular em paisagem: cabeçalho e hero compactos, câmera/minigame visíveis sem overflow horizontal.
+3. `768 × 1024` — tablet: transição coerente entre as colunas e o fluxo móvel.
+4. `1440 × 900` — desktop: largura máxima, alinhamentos e proporção 16:9 do minigame preservados.
+
+Em cada viewport, valide: navegação por `Tab`, ativação por `Enter`/`Espaço`, toque nas alternativas, fallback da câmera, zoom do navegador em 200%, ausência de rolagem horizontal e rotação retrato/paisagem. Repita o smoke test nas versões atuais de Chrome, Edge e Firefox; em Safari/iOS, confirme safe areas e permissão de câmera. A câmera exige `localhost` ou HTTPS.
+
+Para desempenho móvel, execute Lighthouse com simulação de rede/CPU e confirme que o WebP é selecionado na aba Network. Os logos têm dimensões intrínsecas declaradas para reduzir mudança de layout durante o carregamento.
+
 As cores e durações ficam em `src/styles.css`; altere primeiro os tokens em `:root`. Os assets mantêm os arquivos oficiais fornecidos e são servidos diretamente por Vite.
 
 ## Limitações e premissas

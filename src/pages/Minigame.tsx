@@ -95,9 +95,14 @@ export function Minigame({ mode, tracker, neutralNoseY, onComplete, onClassicFal
             ref={canvasRef}
             width={GAME_WIDTH}
             height={GAME_HEIGHT}
-            aria-label="Minigame do pássaro BQ: colete até três dicas e desvie dos circuitos"
+            aria-label={mode === 'classic'
+              ? 'Minigame do pássaro BQ. Toque, clique ou pressione espaço para subir.'
+              : 'Minigame do pássaro BQ controlado pelo movimento do rosto.'}
+            aria-describedby={mode === 'classic' ? 'game-controls' : undefined}
+            tabIndex={mode === 'classic' ? 0 : -1}
           />
-          {mode === 'classic' && <p className="control-callout">Clique, toque ou pressione espaço para subir</p>}
+          {mode === 'classic' && <p className="control-callout" id="game-controls">Clique, toque ou pressione espaço para subir</p>}
+          <p className="orientation-note">Para uma área de jogo maior, use o celular na horizontal.</p>
           {mode === 'camera' && (
             <div className="live-camera-chip"><video ref={videoRef} autoPlay muted playsInline /><span>local</span></div>
           )}

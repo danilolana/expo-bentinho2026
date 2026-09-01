@@ -2,7 +2,13 @@ export function BrandHeader() {
   return (
     <header className="brand-header">
       <a className="brand-lockup" href="#inicio" aria-label="Voltar ao início">
-        <img src="/assets/brasao-bq.png" alt="Brasão do Colégio Bento Quirino" />
+        <img
+          src="/assets/brasao-bq.png"
+          alt="Brasão do Colégio Bento Quirino"
+          width="250"
+          height="269"
+          decoding="async"
+        />
         <span className="brand-copy">
           <strong>Desafio BQ</strong>
           <small>Expô Bentinho 2026</small>
@@ -15,4 +21,3 @@ export function BrandHeader() {
     </header>
   )
 }
-
